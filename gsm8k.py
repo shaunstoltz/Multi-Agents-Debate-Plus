@@ -198,9 +198,10 @@ class Debate:
             judge_player.add_event(self.config['judge_prompt_last2'])
             ans = judge_player.ask()
             judge_player.add_memory(ans)
-            print(ans)
+            print("============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ans ==>> ",ans)
             try:
                 ans = eval(ans)
+
             except Exception as e:
                 print(e)
             if ans["debate_answer"] != '':
