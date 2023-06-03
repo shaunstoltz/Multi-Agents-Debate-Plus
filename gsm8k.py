@@ -210,11 +210,12 @@ class Debate:
             print("===================================>>>>> ",ans)
             if ans[0] == "{":
                 ans = json.loads(ans)
-            print("============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ans ==>> ",ans)
-            if ans["debate_answer"] != '':
-                self.config['success'] = True
-                # save file
-                self.config.update(ans)
+            
+                if ans["debate_answer"] != '':
+                    self.config['success'] = True
+                    # save file
+                    self.config.update(ans)
+            print("============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ans ==>> ",ans)    
             self.players.append(judge_player)
 
         self.print_answer()
