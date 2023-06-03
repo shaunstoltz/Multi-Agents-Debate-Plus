@@ -198,8 +198,11 @@ class Debate:
             judge_player.add_event(self.config['judge_prompt_last2'])
             ans = judge_player.ask()
             judge_player.add_memory(ans)
-            
-            ans = eval(ans)
+            print(ans)
+            try:
+                ans = eval(ans)
+            except Exception as e:
+                print(e)
             if ans["debate_answer"] != '':
                 self.config['success'] = True
                 # save file
