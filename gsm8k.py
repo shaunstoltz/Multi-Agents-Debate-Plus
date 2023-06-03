@@ -250,10 +250,14 @@ if __name__ == "__main__":
             if start is not None and number is not None:
                 data = data[int(start):int(start + number)]
                 
-    print(len(data))
-
     for i in data:
         debate_topic = i['question']
+        answer_raw = i['answer']
+        answer = ""
+
+        answer_index = answer_raw.index('\n#### ')
+        answer = answer_raw[answer_index:]
+        print(answer)
 
         config = json.load(open(f"{MAD_path}/code/utils/config4all.json", "r"))
         if mega:
