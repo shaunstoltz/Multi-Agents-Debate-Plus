@@ -202,13 +202,10 @@ class Debate:
             judge_player.add_event(self.config['judge_prompt_last2'])
             ans = judge_player.ask()
             judge_player.add_memory(ans)
+            ans = json.loads(ans)
             print("============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ans ==>> ",ans)
-            try:
-                ans = json.loads(ans)
-                if ans["debate_answer"] != '':
-                    self.config['success'] = True
-            except Exception as e:
-                print(e)
+            if ans["debate_answer"] != '':
+                self.config['success'] = True
                 # save file
             self.config.update(ans)
             self.players.append(judge_player)
