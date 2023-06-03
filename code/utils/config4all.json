@@ -2,6 +2,7 @@
     "debate_topic": "",
     "base_answer": "",
     "debate_answer": "",
+    "Reason": "",
     "player_meta_prompt": "You are a debater. Hello and welcome to the debate. It's not necessary to fully agree with each other's perspectives, as our objective is to find the correct answer.\nThe debate topic is stated as follows:\n##debate_topic##",
     "moderator_meta_prompt": "You are a moderator. There will be two debaters involved in a debate. They will present their answers and discuss their perspectives on the following topic: \"##debate_topic##\"\nAt the end of each round, you will evaluate answers and decide which is correct.",
     "affirmative_prompt": "##debate_topic##",
