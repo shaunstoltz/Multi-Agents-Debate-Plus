@@ -217,6 +217,8 @@ def parse_args():
     parser.add_argument("-m", "--model-name", type=str, default="gpt-3.5-turbo", help="Model name")
     parser.add_argument("-t", "--temperature", type=float, default=0, help="Sampling temperature")
     parser.add_argument("-p", "--top-p", type=float, default=0, help="Sampling Top P")
+    parser.add_argument("-s", "--start", type=float, default=0, help="Data index to start from")
+    parser.add_argument("-n", "--number", type=float, default=0, help="Number of data elements to iterate through")
 
     return parser.parse_args()
 
@@ -234,12 +236,21 @@ if __name__ == "__main__":
     top_p = args.top_p
     input_file = args.input_file
     data = []
+    start = args.start
+    number = args.number
 
     if input_file is not None:
         with open(input_file) as f:
             data = [json.loads(line) for line in f]
-
+            if start is not None and number is not None:
+                data = data[start, start + number]
+                
     print(len(data))
+
+    for i in data:
+        print(i.question)
+
+        
     while True:
         debate_topic = ""
         while debate_topic == "":
