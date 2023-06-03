@@ -109,9 +109,7 @@ class Debate:
         self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', 'first'))
         self.mod_ans = self.moderator.ask()
         self.moderator.add_memory(self.mod_ans)
-        json_object = json.loads(self.mod_ans)
-        print(self.mod_ans, json_object)
-        self.mod_ans = json_object
+        self.mod_ans = json.loads(self.mod_ans)
         #self.mod_ans = eval(self.mod_ans)
 
     def round_dct(self, num: int):
@@ -181,7 +179,7 @@ class Debate:
                 self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', self.round_dct(round+2)))
                 self.mod_ans = self.moderator.ask()
                 self.moderator.add_memory(self.mod_ans)
-                #self.mod_ans = eval(self.mod_ans)
+                self.mod_ans = json.loads(self.mod_ans)
 
         if self.mod_ans["debate_answer"] != '':
             self.config.update(self.mod_ans)
@@ -206,7 +204,7 @@ class Debate:
             judge_player.add_memory(ans)
             print("============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ans ==>> ",ans)
             try:
-                #ans = eval(ans)
+                ans = json.loads(ans)
                 if ans["debate_answer"] != '':
                     self.config['success'] = True
             except Exception as e:
