@@ -6,6 +6,8 @@ from code.utils.agent import Agent
 
 
 openai_api_key = "Your-OpenAI-Api-Key"
+openai_api_key = os.getenv("OPENAI_API_KEY", "")
+assert openai_api_key, "OPENAI_API_KEY environment variable is missing from .env"
 
 NAME_LIST=[
     "Affirmative side",
