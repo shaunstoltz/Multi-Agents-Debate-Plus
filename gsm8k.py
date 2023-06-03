@@ -243,7 +243,9 @@ if __name__ == "__main__":
         with open(input_file) as f:
             data = [json.loads(line) for line in f]
             if start is not None and number is not None:
-                data = data[start:start + number]
+                end = start + number
+                print(start, end)
+                data = data[start:end]
                 
     print(len(data))
 
