@@ -256,7 +256,7 @@ if __name__ == "__main__":
         answer = ""
 
         answer_index = answer_raw.index('\n#### ')
-        answer = answer_raw[answer_index:]
+        answer = answer_raw[answer_index+5:]
         print(answer)
 
         config = json.load(open(f"{MAD_path}/code/utils/config4all.json", "r"))
