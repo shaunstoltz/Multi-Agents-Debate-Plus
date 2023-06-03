@@ -207,8 +207,9 @@ class Debate:
             judge_player.add_event(self.config['judge_prompt_last2'])
             ans = judge_player.ask()
             judge_player.add_memory(ans)
-            print("==========and =========================>>>>> ",ans)
-            ans = json.loads(ans)
+            print("===================================>>>>> ",ans)
+            if ans[0] == "{":
+                ans = json.loads(ans)
             print("============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ans ==>> ",ans)
             if ans["debate_answer"] != '':
                 self.config['success'] = True
