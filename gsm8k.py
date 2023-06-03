@@ -19,7 +19,7 @@ NAME_LIST=[
 ]
 
 class DebatePlayer(Agent):
-    def __init__(self, model_name: str, name: str, temperature:float, openai_api_key: str, sleep_time: float, answer: str) -> None:
+    def __init__(self, model_name: str, name: str, temperature:float, openai_api_key: str, sleep_time: float) -> None:
         """Create a player in the debate
 
         Args:
@@ -31,19 +31,19 @@ class DebatePlayer(Agent):
         """
         super(DebatePlayer, self).__init__(model_name, name, temperature, sleep_time)
         self.openai_api_key = openai_api_key
-        self.answer = answer
+        
 
 
 class Debate:
     def __init__(self,
+            answer,
             model_name: str='gpt-3.5-turbo', 
             temperature: float=0, 
             num_players: int=3, 
             openai_api_key: str=None,
             config: dict=None,
             max_round: int=3,
-            sleep_time: float=0, 
-            answer: str=""
+            sleep_time: float=0
         ) -> None:
         """Create a debate
 
@@ -276,7 +276,7 @@ if __name__ == "__main__":
 
         config['megaprompt'] = mega_prompt['megaprompt']
 
-        debate = Debate(num_players=3, openai_api_key=openai_api_key, config=config, temperature=temperature, sleep_time=0, answer=answer)
+        debate = Debate(answer=answer, num_players=3, openai_api_key=openai_api_key, config=config, temperature=temperature, sleep_time=0)
         debate.run()
 
 
