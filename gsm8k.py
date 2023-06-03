@@ -255,7 +255,7 @@ if __name__ == "__main__":
         answer_raw = i['answer']
         answer = ""
 
-        answer_index = answer_raw.index('\n#### ')
+        answer_index = answer_raw.index('#### ')
         answer = answer_raw[answer_index+5:]
         print(answer)
 
