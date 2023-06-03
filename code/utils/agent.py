@@ -50,6 +50,7 @@ class Agent:
                     model=self.model_name,
                     messages=messages,
                     temperature=temperature,
+                    top_p=0.5,
                     max_tokens=max_tokens,
                     api_key=api_key,
                 )

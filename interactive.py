@@ -88,8 +88,8 @@ class Debate:
 
     def init_agents(self):
         # start: set meta prompt
-        self.affirmative.set_meta_prompt(self.config['player_meta_prompt'])
-        self.negative.set_meta_prompt(self.config['player_meta_prompt'])
+        self.affirmative.set_meta_prompt(self.config['player_meta_prompt'] + " " + self.config['megaprompt'])
+        self.negative.set_meta_prompt(self.config['player_meta_prompt'] + " " + self.config['megaprompt'])
         self.moderator.set_meta_prompt(self.config['moderator_meta_prompt'])
         
         # start: first round debate, state opinions
