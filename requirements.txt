@@ -4,3 +4,4 @@ tqdm
 langcodes
 backoff
 language_data
+python-dotenv==1.0.0

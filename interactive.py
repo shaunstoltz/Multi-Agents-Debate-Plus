@@ -1,9 +1,12 @@
 import os
 import json
 import random
+from dotenv import load_dotenv
 # random.seed(0)
 from code.utils.agent import Agent
 
+# Load default environment variables (.env)
+load_dotenv()
 
 openai_api_key = "Your-OpenAI-Api-Key"
 openai_api_key = os.getenv("OPENAI_API_KEY", "")
