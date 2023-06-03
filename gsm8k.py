@@ -111,6 +111,7 @@ class Debate:
         self.moderator.add_memory(self.mod_ans)
         json_object = json.loads(self.mod_ans)
         print(self.mod_ans, json_object)
+        self.mod_ans = eval(json_object)
         #self.mod_ans = eval(self.mod_ans)
 
     def round_dct(self, num: int):
