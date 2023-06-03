@@ -222,7 +222,8 @@ def parse_args():
     parser.add_argument("-p", "--top-p", type=float, default=0, help="Sampling Top P")
     parser.add_argument("-s", "--start", type=float, default=0, help="Data index to start from")
     parser.add_argument("-n", "--number", type=float, default=0, help="Number of data elements to iterate through")
-    parser.add_argument("-me", "--mega", type=float, default=False, help="Use Mega prompt")
+    parser.add_argument("-me", "--mega", type=bool, default=False, help="Use Mega prompt")
+
 
     return parser.parse_args()
 
