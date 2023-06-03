@@ -214,7 +214,7 @@ class Debate:
             if ans["debate_answer"] != '':
                 self.config['success'] = True
                 # save file
-            self.config.update(ans)
+                self.config.update(ans)
             self.players.append(judge_player)
 
         self.print_answer()
