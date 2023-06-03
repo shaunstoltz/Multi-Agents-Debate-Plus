@@ -243,14 +243,14 @@ if __name__ == "__main__":
         with open(input_file) as f:
             data = [json.loads(line) for line in f]
             if start is not None and number is not None:
-                data = data[start, start + number]
+                data = data[start:start + number]
                 
     print(len(data))
 
     for i in data:
         print(i.question)
 
-        
+
     while True:
         debate_topic = ""
         while debate_topic == "":
