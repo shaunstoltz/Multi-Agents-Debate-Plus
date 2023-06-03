@@ -45,7 +45,7 @@ class Agent:
         assert self.model_name in support_models, f"Not support {self.model_name}. Choices: {support_models}"
         try:
             if self.model_name in support_models:
-                openai.api_base = "https://localhost"
+                #openai.api_base = "https://localhost"
                 response = openai.ChatCompletion.create(
                     model=self.model_name,
                     messages=messages,
