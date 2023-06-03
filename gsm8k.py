@@ -201,11 +201,10 @@ class Debate:
             print("============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ans ==>> ",ans)
             try:
                 ans = eval(ans)
-
+                if ans["debate_answer"] != '':
+                    self.config['success'] = True
             except Exception as e:
                 print(e)
-            if ans["debate_answer"] != '':
-                self.config['success'] = True
                 # save file
             self.config.update(ans)
             self.players.append(judge_player)
@@ -273,8 +272,6 @@ if __name__ == "__main__":
         config['debate_topic'] = debate_topic
 
         config['megaprompt'] = mega_prompt['megaprompt']
-
-        print(config)
 
         debate = Debate(num_players=3, openai_api_key=openai_api_key, config=config, temperature=temperature, sleep_time=0)
         debate.run()
