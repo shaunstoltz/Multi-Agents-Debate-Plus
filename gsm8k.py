@@ -109,8 +109,10 @@ class Debate:
         self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', 'first'))
         self.mod_ans = self.moderator.ask()
         self.moderator.add_memory(self.mod_ans)
-        print("===================>>>>>>>>>>>>>>>>>> self.mods", self.mod_ans)
-        self.mod_ans = json.loads(self.mod_ans)
+        if self.mod_ans[0] == "{":
+
+            print("===================>>>>>>>>>>>>>>>>>> self.mods", self.mod_ans)
+            self.mod_ans = json.loads(self.mod_ans)
         #self.mod_ans = eval(self.mod_ans)
 
     def round_dct(self, num: int):
@@ -180,7 +182,9 @@ class Debate:
                 self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', self.round_dct(round+2)))
                 self.mod_ans = self.moderator.ask()
                 self.moderator.add_memory(self.mod_ans)
-                self.mod_ans = json.loads(self.mod_ans)
+                print("====================== inside run self.mod_ans", self.mod_ans)
+                if self.mod_ans[0] == "{":
+                    self.mod_ans = json.loads(self.mod_ans)
 
         if self.mod_ans["debate_answer"] != '':
             self.config.update(self.mod_ans)
