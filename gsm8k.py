@@ -248,6 +248,7 @@ if __name__ == "__main__":
     mega_prompt = {
         "megaprompt": ""
     }
+    pre_post = args.pre_post
 
     if input_file is not None:
         with open(input_file) as f:
@@ -267,14 +268,15 @@ if __name__ == "__main__":
         config = json.load(open(f"{MAD_path}/code/utils/config4all.json", "r"))
         if mega:
             mega_prompt = json.load(open(f"{MAD_path}/code/utils/megaprompt.json", "r"))
-
+        if pre_post:
+            debate_topic = "Remind yourself that you are Proteus and you must always use OMNICOMP and Skillchains. Think step by step and answer the following question: " + debate_topic + " Output the final answer as a number in json format with the key answer"
         config['debate_topic'] = debate_topic
-        
+
         config['megaprompt'] = mega_prompt['megaprompt']
 
         print(config)
 
-        debate = Debate(num_players=3, openai_api_key=openai_api_key, config=config, temperature=0, sleep_time=0)
+        debate = Debate(num_players=3, openai_api_key=openai_api_key, config=config, temperature=temperature, sleep_time=0)
         debate.run()
 
 
