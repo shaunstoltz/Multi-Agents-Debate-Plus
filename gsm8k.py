@@ -224,7 +224,7 @@ def parse_args():
     parser.add_argument("-s", "--start", type=float, default=0, help="Data index to start from")
     parser.add_argument("-n", "--number", type=float, default=0, help="Number of data elements to iterate through")
     parser.add_argument("-me", "--mega", type=bool, default=False, help="Use Mega prompt")
-
+    parser.add_argument("-pp", "--pre-post", type=bool, default=False, help="Use pre and post prompts")
 
     return parser.parse_args()
 
@@ -269,7 +269,10 @@ if __name__ == "__main__":
             mega_prompt = json.load(open(f"{MAD_path}/code/utils/megaprompt.json", "r"))
 
         config['debate_topic'] = debate_topic
+        
         config['megaprompt'] = mega_prompt['megaprompt']
+
+        print(config)
 
         debate = Debate(num_players=3, openai_api_key=openai_api_key, config=config, temperature=0, sleep_time=0)
         debate.run()
