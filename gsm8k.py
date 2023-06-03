@@ -248,14 +248,8 @@ if __name__ == "__main__":
     print(len(data))
 
     for i in data:
-        print(i['question'])
-
-
-    while True:
-        debate_topic = ""
-        while debate_topic == "":
-            debate_topic = input(f"\nEnter your debate topic: ")
-            
+        debate_topic = i['question']
+        
         config = json.load(open(f"{MAD_path}/code/utils/config4all.json", "r"))
         mega_prompt = json.load(open(f"{MAD_path}/code/utils/megaprompt.json", "r"))
         config['debate_topic'] = debate_topic
@@ -263,4 +257,18 @@ if __name__ == "__main__":
 
         debate = Debate(num_players=3, openai_api_key=openai_api_key, config=config, temperature=0, sleep_time=0)
         debate.run()
+
+
+    # while True:
+    #     debate_topic = ""
+    #     while debate_topic == "":
+    #         debate_topic = input(f"\nEnter your debate topic: ")
+            
+    #     config = json.load(open(f"{MAD_path}/code/utils/config4all.json", "r"))
+    #     mega_prompt = json.load(open(f"{MAD_path}/code/utils/megaprompt.json", "r"))
+    #     config['debate_topic'] = debate_topic
+    #     config['megaprompt'] = mega_prompt['megaprompt']
+
+    #     debate = Debate(num_players=3, openai_api_key=openai_api_key, config=config, temperature=0, sleep_time=0)
+    #     debate.run()
 
