@@ -1,6 +1,7 @@
 import os
 import json
 import random
+import argparse
 from dotenv import load_dotenv
 # random.seed(0)
 from code.utils.agent import Agent
@@ -208,11 +209,26 @@ class Debate:
 
         self.print_answer()
 
+def parse_args():
+    parser = argparse.ArgumentParser("", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser.add_argument("-i", "--input-file", type=str, required=True, help="Input file path")
+    parser.add_argument("-o", "--output-dir", type=str, required=True, help="Output file dir")
+    parser.add_argument("-lp", "--lang-pair", type=str, required=True, help="Language pair")
+    parser.add_argument("-k", "--api-key", type=str, required=True, help="OpenAI api key")
+    parser.add_argument("-m", "--model-name", type=str, default="gpt-3.5-turbo", help="Model name")
+    parser.add_argument("-t", "--temperature", type=float, default=0, help="Sampling temperature")
+
+    return parser.parse_args()
+
 
 if __name__ == "__main__":
 
     current_script_path = os.path.abspath(__file__)
     MAD_path = current_script_path.rsplit("/", 1)[0]
+
+    args = parse_args()
+    print(args)
 
     while True:
         debate_topic = ""
