@@ -55,7 +55,7 @@ class Agent:
                     api_key=api_key,
                 )
                 gen = response['choices'][0]['message']['content']
-                print(gen, response)
+                #print(gen, response)
             return gen
 
         except RateLimitError as e:
