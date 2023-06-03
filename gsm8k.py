@@ -9,7 +9,6 @@ from code.utils.agent import Agent
 # Load default environment variables (.env)
 load_dotenv()
 
-openai_api_key = "Your-OpenAI-Api-Key"
 openai_api_key = os.getenv("OPENAI_API_KEY", "")
 assert openai_api_key, "OPENAI_API_KEY environment variable is missing from .env"
 
@@ -212,12 +211,12 @@ class Debate:
 def parse_args():
     parser = argparse.ArgumentParser("", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument("-i", "--input-file", type=str, required=True, help="Input file path")
-    parser.add_argument("-o", "--output-dir", type=str, required=True, help="Output file dir")
-    parser.add_argument("-lp", "--lang-pair", type=str, required=True, help="Language pair")
-    parser.add_argument("-k", "--api-key", type=str, required=True, help="OpenAI api key")
+    parser.add_argument("-i", "--input-file", type=str, required=False, help="Input file path")
+    parser.add_argument("-o", "--output-dir", type=str, required=False, help="Output file dir")
+    parser.add_argument("-k", "--api-key", type=str, required=False, help="OpenAI api key")
     parser.add_argument("-m", "--model-name", type=str, default="gpt-3.5-turbo", help="Model name")
     parser.add_argument("-t", "--temperature", type=float, default=0, help="Sampling temperature")
+    parser.add_argument("-p", "--top-p", type=float, default=0, help="Sampling Top P")
 
     return parser.parse_args()
 
@@ -228,7 +227,15 @@ if __name__ == "__main__":
     MAD_path = current_script_path.rsplit("/", 1)[0]
 
     args = parse_args()
-    print(args)
+
+    api_key = args.api_key
+    model_name = args.model_name
+    temperature = args.temperature
+    top_p = args.top_p
+
+    print(api_key, model_name, temperature, top_p)
+    
+
 
     while True:
         debate_topic = ""
