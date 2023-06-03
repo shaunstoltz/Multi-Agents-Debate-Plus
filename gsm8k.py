@@ -199,7 +199,7 @@ class Debate:
             ans = judge_player.ask()
             judge_player.add_memory(ans)
             
-            #ans = eval(ans)
+            ans = eval(ans)
             if ans["debate_answer"] != '':
                 self.config['success'] = True
                 # save file
