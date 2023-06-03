@@ -109,8 +109,9 @@ class Debate:
         self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', 'first'))
         self.mod_ans = self.moderator.ask()
         self.moderator.add_memory(self.mod_ans)
-        print(self.mod_ans)
-        #self.mod_ans = eval(self.mod_ans)
+        json_object = json.loads(self.mod_ans)
+        print(self.mod_ans, json_object)
+        self.mod_ans = eval(self.mod_ans)
 
     def round_dct(self, num: int):
         dct = {
