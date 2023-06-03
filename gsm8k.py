@@ -210,7 +210,7 @@ class Debate:
             print("===================================>>>>> ",ans)
             if ans[0] == "{":
                 ans = json.loads(ans)
-            
+                print(ans)
                 if ans["debate_answer"] != '':
                     self.config['success'] = True
                     # save file
