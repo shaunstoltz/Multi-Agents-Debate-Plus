@@ -219,6 +219,7 @@ def parse_args():
     parser.add_argument("-p", "--top-p", type=float, default=0, help="Sampling Top P")
     parser.add_argument("-s", "--start", type=float, default=0, help="Data index to start from")
     parser.add_argument("-n", "--number", type=float, default=0, help="Number of data elements to iterate through")
+    parser.add_argument("-me", "--mega", type=float, default=False, help="Use Mega prompt")
 
     return parser.parse_args()
 
@@ -238,6 +239,10 @@ if __name__ == "__main__":
     data = []
     start = args.start
     number = args.number
+    mega = args.mega
+    mega_prompt = {
+        "megaprompt": ""
+    }
 
     if input_file is not None:
         with open(input_file) as f:
@@ -249,9 +254,11 @@ if __name__ == "__main__":
 
     for i in data:
         debate_topic = i['question']
-        
+
         config = json.load(open(f"{MAD_path}/code/utils/config4all.json", "r"))
-        mega_prompt = json.load(open(f"{MAD_path}/code/utils/megaprompt.json", "r"))
+        if mega:
+            mega_prompt = json.load(open(f"{MAD_path}/code/utils/megaprompt.json", "r"))
+
         config['debate_topic'] = debate_topic
         config['megaprompt'] = mega_prompt['megaprompt']
 
