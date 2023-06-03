@@ -232,11 +232,14 @@ if __name__ == "__main__":
     model_name = args.model_name
     temperature = args.temperature
     top_p = args.top_p
+    input_file = args.input_file
+    data = []
 
-    print(api_key, model_name, temperature, top_p)
-    
+    if input_file is not None:
+        with open(input_file) as f:
+            data = [json.loads(line) for line in f]
 
-
+    print(len(data))
     while True:
         debate_topic = ""
         while debate_topic == "":
