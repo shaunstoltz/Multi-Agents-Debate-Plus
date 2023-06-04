@@ -158,6 +158,24 @@ class Debate:
         if self.mod_ans[0] == "{" and self.mod_ans[-1] == "}":
             self.mod_ans = json.loads(self.mod_ans)
 
+        else:
+            if "{\"Whether there is a preference\":" in self.mod_ans:
+                start_index = self.mod_ans.index('{\"Whether')
+
+                extracted_string = self.mod_ans[start_index:]
+                adder = 1
+                if "}}" in extracted_string:
+                    end_index = extracted_string.index("}}")
+                    adder = 2
+                else:
+                    end_index = extracted_string.index("}")
+                extracted_answer = extracted_string[:end_index+adder]
+                try:
+                    self.mod_ans = json.loads(extracted_answer)
+                except Exception as e:
+                    print(e)
+
+
     def round_dct(self, num: int):
         dct = {
             1: 'first', 2: 'second', 3: 'third', 4: 'fourth', 5: 'fifth', 6: 'sixth', 7: 'seventh', 8: 'eighth', 9: 'ninth', 10: 'tenth'
@@ -245,25 +263,28 @@ class Debate:
                     print("disagreement", aff_ans, neg_ans)
             except Exception as e:
                 print("+++++++ exception in ans json check",e)
-            if self.mod_ans["debate_answer"] != '':
-                break
-            else:
-                print(f"===== Debate Round-{round+2} =====\n")
-                self.affirmative.add_event(self.config['debate_prompt'].replace('##oppo_ans##', self.neg_ans))
-                self.aff_ans = self.affirmative.ask()
-                self.aff_json_ans = self.extract_answer(self.aff_ans)
-                self.affirmative.add_memory(self.aff_ans)
+            try:
+                if self.mod_ans["debate_answer"] != '':
+                    break
+                else:
+                    print(f"===== Debate Round-{round+2} =====\n")
+                    self.affirmative.add_event(self.config['debate_prompt'].replace('##oppo_ans##', self.neg_ans))
+                    self.aff_ans = self.affirmative.ask()
+                    self.aff_json_ans = self.extract_answer(self.aff_ans)
+                    self.affirmative.add_memory(self.aff_ans)
 
-                self.negative.add_event(self.config['debate_prompt'].replace('##oppo_ans##', self.aff_ans))
-                self.neg_json_ans = self.extract_answer(self.neg_ans)
-                self.neg_ans = self.negative.ask()
-                self.negative.add_memory(self.neg_ans)
+                    self.negative.add_event(self.config['debate_prompt'].replace('##oppo_ans##', self.aff_ans))
+                    self.neg_json_ans = self.extract_answer(self.neg_ans)
+                    self.neg_ans = self.negative.ask()
+                    self.negative.add_memory(self.neg_ans)
 
-                self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', self.round_dct(round+2)))
-                self.mod_ans = self.moderator.ask()
-                self.moderator.add_memory(self.mod_ans)
-                if self.mod_ans[0] == "{":
-                    self.mod_ans = json.loads(self.mod_ans)
+                    self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', self.round_dct(round+2)))
+                    self.mod_ans = self.moderator.ask()
+                    self.moderator.add_memory(self.mod_ans)
+                    if self.mod_ans[0] == "{":
+                        self.mod_ans = json.loads(self.mod_ans)
+            except Exception as e:
+                print(e)
 
         if self.mod_ans["debate_answer"] != '':
             self.config.update(self.mod_ans)
@@ -372,9 +393,6 @@ if __name__ == "__main__":
 
     debates['start'] = start
     debates['number'] = number
-
-
-
     
     presentDate = datetime.datetime.now()
     unix_timestamp = datetime.datetime.timestamp(presentDate)*1000
