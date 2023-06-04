@@ -233,7 +233,8 @@ class Debate:
             self.config['success'] = True
             if str(self.answer) in self.mod_ans["debate_answer"]:
                 print("answer is correct", self.answer, self.mod_ans["debate_answer"])
-
+            else:
+                print("answers??=======================>>>>>>>>>>>>>>>" self.answer, self.mod_ans["debate_answer"])
         # ultimate deadly technique.
         else:
             judge_player = DebatePlayer(model_name=self.model_name, name='Judge', temperature=self.temperature, openai_api_key=self.openai_api_key, sleep_time=self.sleep_time)
