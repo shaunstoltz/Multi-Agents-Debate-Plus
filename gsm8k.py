@@ -281,8 +281,24 @@ class Debate:
                     self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', self.round_dct(round+2)))
                     self.mod_ans = self.moderator.ask()
                     self.moderator.add_memory(self.mod_ans)
-                    if self.mod_ans[0] == "{":
+                    if self.mod_ans[0] == "{" and self.mod_ans[-1] == "}":
                         self.mod_ans = json.loads(self.mod_ans)
+                    else:
+                        if "{\"Whether there is a preference\":" in self.mod_ans:
+                            start_index = self.mod_ans.index('{\"Whether')
+
+                            extracted_string = self.mod_ans[start_index:]
+                            adder = 1
+                            if "}}" in extracted_string:
+                                end_index = extracted_string.index("}}")
+                                adder = 2
+                            else:
+                                end_index = extracted_string.index("}")
+                            extracted_answer = extracted_string[:end_index+adder]
+                            try:
+                                self.mod_ans = json.loads(extracted_answer)
+                            except Exception as e:
+                                print(e)
             except Exception as e:
                 print(e)
 
