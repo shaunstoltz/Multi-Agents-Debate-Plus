@@ -98,6 +98,13 @@ class Debate:
             end_index = extracted_string.index("}")
             extracted_answer = extracted_string[:end_index]
 
+
+        if '{"answer":' in rawanswer:
+            start_index = rawanswer.index('{"answer":')
+            extracted_string = rawanswer[start_index:]
+            end_index = extracted_string.index("}")
+            extracted_answer = extracted_string[:end_index]    
+
         return extracted_answer
 
 
@@ -111,8 +118,8 @@ class Debate:
         print(f"===== Debate Round-1 =====\n")
         self.affirmative.add_event(self.config['affirmative_prompt'])
         self.aff_ans = self.affirmative.ask()
-        self.extract_answer(self.aff_ans)
-        print("================>>>>>>>> Extract answer ================>> ", self.aff_ans)
+        
+        print("================>>>>>>>> Extract answer ================>> ", self.extract_answer(self.aff_ans), self.aff_ans)
         self.affirmative.add_memory(self.aff_ans)
         self.config['base_answer'] = self.aff_ans
 
