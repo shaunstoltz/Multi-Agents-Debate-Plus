@@ -134,7 +134,7 @@ class Debate:
         self.mod_ans = self.moderator.ask()
 
         self.moderator.add_memory(self.mod_ans)
-        if self.mod_ans[0] == "{":
+        if self.mod_ans[0] == "{" and self.mod_ans[-1] == "}":
 
             print("===================>>>>>>>>>>>>>>>>>> self.mods", self.mod_ans)
             self.mod_ans = json.loads(self.mod_ans)
