@@ -119,14 +119,16 @@ class Debate:
         self.affirmative.add_event(self.config['affirmative_prompt'])
         self.aff_ans = self.affirmative.ask()
         
-        print("================>>>>>>>> Extract answer ================>> ", self.extract_answer(self.aff_ans), self.aff_ans)
+        self.aff_json_ans = self.extract_answer(self.aff_ans)
         self.affirmative.add_memory(self.aff_ans)
         self.config['base_answer'] = self.aff_ans
 
         self.negative.add_event(self.config['negative_prompt'].replace('##aff_ans##', self.aff_ans))
         self.neg_ans = self.negative.ask()
+        self.neg_json_ans = self.extract_answer(self.neg_ans)
         self.negative.add_memory(self.neg_ans)
 
+        print("json answers", self.aff_json_ans, self.neg_json_ans)
         self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', 'first'))
         self.mod_ans = self.moderator.ask()
 
@@ -195,9 +197,11 @@ class Debate:
                 print(f"===== Debate Round-{round+2} =====\n")
                 self.affirmative.add_event(self.config['debate_prompt'].replace('##oppo_ans##', self.neg_ans))
                 self.aff_ans = self.affirmative.ask()
+                self.aff_json_ans = self.extract_answer(self.aff_ans)
                 self.affirmative.add_memory(self.aff_ans)
 
                 self.negative.add_event(self.config['debate_prompt'].replace('##oppo_ans##', self.aff_ans))
+                self.neg_json_ans = self.extract_answer(self.neg_ans)
                 self.neg_ans = self.negative.ask()
                 self.negative.add_memory(self.neg_ans)
 
