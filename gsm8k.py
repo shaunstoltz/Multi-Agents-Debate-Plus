@@ -231,7 +231,7 @@ class Debate:
         if self.mod_ans["debate_answer"] != '':
             self.config.update(self.mod_ans)
             self.config['success'] = True
-            if str(self.answer) in self.mod_ans["debate_answer"]:
+            if str(self.answer) in str(self.mod_ans["debate_answer"]):
                 print("answer is correct", self.answer, self.mod_ans["debate_answer"])
             else:
                 print("answers??=======================>>>>>>>>>>>>>>>", self.answer, self.mod_ans["debate_answer"])
