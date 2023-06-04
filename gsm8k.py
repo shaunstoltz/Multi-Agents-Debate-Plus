@@ -19,6 +19,8 @@ NAME_LIST=[
 ]
 
 debates = {
+    "start": 0,
+    "number": 0,
     "no_correct": 0,
     "unknow_answers": [],
     "debate_outcomes": [{
@@ -50,6 +52,7 @@ class DebatePlayer(Agent):
 class Debate:
     def __init__(self,
             answer,
+            index,
             model_name: str='gpt-3.5-turbo', 
             temperature: float=0, 
             num_players: int=3, 
@@ -78,6 +81,7 @@ class Debate:
         self.sleep_time = sleep_time
         self.answer = answer
         self.determined_correctness = False
+        self.index = index
 
 
         self.init_prompt()
@@ -184,6 +188,8 @@ class Debate:
         #     "moderator_memory": [],
         #     "judge_memory": []
         # }]
+
+
 
         debate = {
              "pos_memory": self.affirmative.memory_lst,
@@ -353,7 +359,7 @@ if __name__ == "__main__":
             data = [json.loads(line) for line in f]
             if start is not None and number is not None:
                 data = data[int(start):int(start + number)]
-                
+    i = 0
     for i in data:
         debate_topic = i['question']
         answer_raw = i['answer']
@@ -372,9 +378,12 @@ if __name__ == "__main__":
 
         config['megaprompt'] = mega_prompt['megaprompt']
 
-        debate = Debate(answer=answer, num_players=3, openai_api_key=openai_api_key, config=config, temperature=temperature, sleep_time=0)
+        debate = Debate(answer=answer, index=i, num_players=3, openai_api_key=openai_api_key, config=config, temperature=temperature, sleep_time=0)
         debate.run()
+        i += 1
 
+    debates['start'] = start
+    debates['number'] = number
     print(debates)
     # while True:
     #     debate_topic = ""
