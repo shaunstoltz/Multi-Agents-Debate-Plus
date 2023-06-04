@@ -248,7 +248,7 @@ class Debate:
 
     def run(self):
 
-        for round in range(self.max_round - 1):
+        for round in range(1):
             aff_ans = {}
             neg_ans = {}
             # check if we have a concensus of json answers
