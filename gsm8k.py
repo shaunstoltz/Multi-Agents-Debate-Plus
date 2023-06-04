@@ -25,6 +25,7 @@ debates = {
     "no_correct": 0,
     "unknow_answers": [],
     "debate_outcomes": [{
+        "ground_truth": "",
         "pos_memory": [],
         "neg_memory": [],
         "moderator_memory": [],
@@ -183,6 +184,7 @@ class Debate:
         # }]
 
         debate = {
+            "ground_truth": self.answer,
              "pos_memory": self.affirmative.memory_lst,
              "neg_memory": self.negative.memory_lst,
              "moderator_memory": self.moderator.memory_lst,
