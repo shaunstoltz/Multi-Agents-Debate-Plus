@@ -388,7 +388,7 @@ if __name__ == "__main__":
         config['megaprompt'] = mega_prompt['megaprompt']
 
         debate = Debate(answer=answer, index=j, num_players=3, openai_api_key=openai_api_key, config=config, temperature=temperature, sleep_time=0)
-        debate.run()
+        #debate.run()
         j += 1
 
     debates['start'] = start
