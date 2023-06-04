@@ -89,7 +89,7 @@ class Debate:
         self.negative = self.players[1]
         self.moderator = self.players[2]
 
-    def extract_answer(rawanswer):
+    def extract_answer(self, rawanswer):
         extracted_answer = ""
 
         if "{'answer':" in rawanswer:
@@ -111,8 +111,8 @@ class Debate:
         print(f"===== Debate Round-1 =====\n")
         self.affirmative.add_event(self.config['affirmative_prompt'])
         self.aff_ans = self.affirmative.ask()
-        #self.extract_answer(self.aff_ans)
-        print("================>>>>>>>> Extract answer ================>> ", self.aff_ans[0])
+        self.extract_answer(self.aff_ans)
+        print("================>>>>>>>> Extract answer ================>> ", self.aff_ans)
         self.affirmative.add_memory(self.aff_ans)
         self.config['base_answer'] = self.aff_ans
 
