@@ -190,7 +190,19 @@ class Debate:
     def run(self):
 
         for round in range(self.max_round - 1):
+            aff_ans = {}
+            neg_ans = {}
+            # check if we have a concensus of json answers
+            try:
+                aff_ans = json.loads(self.aff_json_ans)
+                neg_ans = json.loads(self.neg_json_ans)
 
+                if aff_ans['answer'] == neg_ans['answer']:
+                    print("agreement")
+                else:
+                    print("disagreement", aff_ans, neg_ans)
+            except Exception as e:
+                print("+++++++ exception in ans json check",e)
             if self.mod_ans["debate_answer"] != '':
                 break
             else:
