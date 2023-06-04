@@ -89,6 +89,18 @@ class Debate:
         self.negative = self.players[1]
         self.moderator = self.players[2]
 
+    def extract_answer(rawanswer):
+        extracted_answer = ""
+
+        if "{'answer':" in rawanswer:
+            start_index = rawanswer.index("{'answer':")
+            extracted_string = rawanswer[start_index:]
+            end_index = extracted_string.index("}")
+            extracted_answer = extracted_string[:end_index]
+
+        return extracted_answer
+
+
     def init_agents(self):
         # start: set meta prompt
         self.affirmative.set_meta_prompt(self.config['player_meta_prompt'] + " " + self.config['megaprompt'])
@@ -99,6 +111,7 @@ class Debate:
         print(f"===== Debate Round-1 =====\n")
         self.affirmative.add_event(self.config['affirmative_prompt'])
         self.aff_ans = self.affirmative.ask()
+        print("================>>>>>>>> Extract answer ================>> ",self.extract_answer(self.aff_ans), self.aff_ans)
         self.affirmative.add_memory(self.aff_ans)
         self.config['base_answer'] = self.aff_ans
 
@@ -108,6 +121,7 @@ class Debate:
 
         self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', 'first'))
         self.mod_ans = self.moderator.ask()
+
         self.moderator.add_memory(self.mod_ans)
         if self.mod_ans[0] == "{":
 
