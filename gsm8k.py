@@ -104,7 +104,13 @@ class Debate:
             start_index = rawanswer.index('{"answer":')
             extracted_string = rawanswer[start_index:]
             end_index = extracted_string.index("}")
-            extracted_answer = extracted_string[:end_index+1]    
+            extracted_answer = extracted_string[:end_index+1]
+        
+        if '{"\nanswer":' in rawanswer:
+            start_index = rawanswer.index('{"answer":')
+            extracted_string = rawanswer[start_index:]
+            end_index = extracted_string.index("\n}")
+            extracted_answer = extracted_string[:end_index+1] 
 
         return extracted_answer
 
