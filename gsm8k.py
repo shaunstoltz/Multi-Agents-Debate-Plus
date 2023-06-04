@@ -194,9 +194,10 @@ class Debate:
             neg_ans = {}
             # check if we have a concensus of json answers
             try:
-                aff_ans = json.loads(self.aff_json_ans)
-                neg_ans = json.loads(self.neg_json_ans)
-
+                if self.aff_json_ans is not None:
+                    aff_ans = json.loads(self.aff_json_ans)
+                if self.neg_json_ans is not None:
+                    neg_ans = json.loads(self.neg_json_ans)
                 if aff_ans['answer'] == neg_ans['answer']:
                     print("agreement")
                 else:
