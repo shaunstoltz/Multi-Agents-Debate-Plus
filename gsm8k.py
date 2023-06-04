@@ -356,7 +356,7 @@ if __name__ == "__main__":
         debate = Debate(answer=answer, num_players=3, openai_api_key=openai_api_key, config=config, temperature=temperature, sleep_time=0)
         debate.run()
 
-
+    print(debates)
     # while True:
     #     debate_topic = ""
     #     while debate_topic == "":
