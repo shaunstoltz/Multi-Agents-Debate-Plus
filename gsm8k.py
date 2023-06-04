@@ -24,7 +24,8 @@ debates = {
     "debate_outcomes": [{
         "pos_memory": [],
         "neg_memory": [],
-        "moderator_memory": []
+        "moderator_memory": [],
+        "judge_memory": []
     }]
 }
 
@@ -175,6 +176,24 @@ class Debate:
         print(self.config["debate_answer"])
         print("\n----- Debate Reason -----")
         print(self.config["Reason"])
+
+        # add debate to debates global
+        # "debate_outcomes": [{
+        #     "pos_memory": [],
+        #     "neg_memory": [],
+        #     "moderator_memory": [],
+        #     "judge_memory": []
+        # }]
+
+        debate = {
+             "pos_memory": self.affirmative.memory_lst,
+             "neg_memory": self.negative.memory_lst,
+             "moderator_memory": self.moderator.memory_lst,
+             "judge_memory": []
+        }
+
+        debates['debate_outcomes'].append(debate)
+
 
     def broadcast(self, msg: str):
         """Broadcast a message to all players. 
