@@ -56,7 +56,7 @@ class Debate:
             num_players: int=3, 
             openai_api_key: str=None,
             config: dict=None,
-            max_round: int=3,
+            max_round: int=1,
             sleep_time: float=0
         ) -> None:
         """Create a debate
