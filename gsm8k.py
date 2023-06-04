@@ -2,6 +2,7 @@ import os
 import json
 import random
 import argparse
+import datetime
 from dotenv import load_dotenv
 # random.seed(0)
 from code.utils.agent import Agent
@@ -369,5 +370,15 @@ if __name__ == "__main__":
 
     debates['start'] = start
     debates['number'] = number
+
+
+
+    
+    presentDate = datetime.datetime.now()
+    unix_timestamp = datetime.datetime.timestamp(presentDate)*1000
+    file_path = f"{MAD_path}/data/output/start_{start}_number_{number}_mega_{mega}_prepost_{pre_post}_{unix_timestamp}.json"
+    file = open(file_path, 'w')
+    file.write(json.dumps(debates))
+    file.close()
     print(debates)
 
