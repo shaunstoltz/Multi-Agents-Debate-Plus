@@ -111,7 +111,8 @@ class Debate:
         print(f"===== Debate Round-1 =====\n")
         self.affirmative.add_event(self.config['affirmative_prompt'])
         self.aff_ans = self.affirmative.ask()
-        print("================>>>>>>>> Extract answer ================>> ",self.extract_answer(self.aff_ans), self.aff_ans)
+        #self.extract_answer(self.aff_ans),
+        print("================>>>>>>>> Extract answer ================>> ", self.aff_ans)
         self.affirmative.add_memory(self.aff_ans)
         self.config['base_answer'] = self.aff_ans
 
