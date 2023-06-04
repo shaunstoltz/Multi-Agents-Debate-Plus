@@ -65,6 +65,7 @@ class Debate:
         self.sleep_time = sleep_time
         self.answer = answer
 
+
         self.init_prompt()
 
         # creat&init agents
@@ -201,6 +202,7 @@ class Debate:
                 if aff_ans['answer'] == neg_ans['answer']:
                     print("agreement")
                     self.mod_ans["debate_answer"] = aff_ans['answer']
+
                 else:
                     print("disagreement", aff_ans, neg_ans)
             except Exception as e:
@@ -229,6 +231,8 @@ class Debate:
         if self.mod_ans["debate_answer"] != '':
             self.config.update(self.mod_ans)
             self.config['success'] = True
+            if self.answer in self.mod_ans["debate_answer"]:
+                print("answer is correct", self.answer, self.mod_ans["debate_answer"])
 
         # ultimate deadly technique.
         else:
