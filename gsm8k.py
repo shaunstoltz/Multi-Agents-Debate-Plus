@@ -200,6 +200,7 @@ class Debate:
                     neg_ans = json.loads(self.neg_json_ans)
                 if aff_ans['answer'] == neg_ans['answer']:
                     print("agreement")
+                    self.mod_ans["debate_answer"] = aff_ans['answer']
                 else:
                     print("disagreement", aff_ans, neg_ans)
             except Exception as e:
