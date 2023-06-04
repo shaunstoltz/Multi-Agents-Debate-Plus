@@ -359,7 +359,7 @@ if __name__ == "__main__":
             data = [json.loads(line) for line in f]
             if start is not None and number is not None:
                 data = data[int(start):int(start + number)]
-    i = 0
+    j = 0
     for i in data:
         debate_topic = i['question']
         answer_raw = i['answer']
@@ -378,9 +378,9 @@ if __name__ == "__main__":
 
         config['megaprompt'] = mega_prompt['megaprompt']
 
-        debate = Debate(answer=answer, index=i, num_players=3, openai_api_key=openai_api_key, config=config, temperature=temperature, sleep_time=0)
+        debate = Debate(answer=answer, index=j, num_players=3, openai_api_key=openai_api_key, config=config, temperature=temperature, sleep_time=0)
         debate.run()
-        i += 1
+        j += 1
 
     debates['start'] = start
     debates['number'] = number
