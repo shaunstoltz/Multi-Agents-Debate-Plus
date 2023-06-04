@@ -31,8 +31,6 @@ debates = {
     }]
 }
 
-
-
 class DebatePlayer(Agent):
     def __init__(self, model_name: str, name: str, temperature:float, openai_api_key: str, sleep_time: float) -> None:
         """Create a player in the debate
@@ -47,8 +45,6 @@ class DebatePlayer(Agent):
         super(DebatePlayer, self).__init__(model_name, name, temperature, sleep_time)
         self.openai_api_key = openai_api_key
         
-
-
 class Debate:
     def __init__(self,
             answer,
@@ -153,16 +149,12 @@ class Debate:
         self.neg_json_ans = self.extract_answer(self.neg_ans)
         self.negative.add_memory(self.neg_ans)
 
-        print("json answers", self.aff_json_ans, self.neg_json_ans)
         self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', 'first'))
         self.mod_ans = self.moderator.ask()
 
         self.moderator.add_memory(self.mod_ans)
         if self.mod_ans[0] == "{" and self.mod_ans[-1] == "}":
-
-            print("===================>>>>>>>>>>>>>>>>>> self.mods", self.mod_ans)
             self.mod_ans = json.loads(self.mod_ans)
-        #self.mod_ans = eval(self.mod_ans)
 
     def round_dct(self, num: int):
         dct = {
@@ -189,8 +181,6 @@ class Debate:
         #     "judge_memory": []
         # }]
 
-
-
         debate = {
              "pos_memory": self.affirmative.memory_lst,
              "neg_memory": self.negative.memory_lst,
@@ -199,6 +189,9 @@ class Debate:
         }
 
         debates['debate_outcomes'].append(debate)
+
+        if self.determined_correctness == False:
+            debates["unknow_answers"].append(self.index)
 
 
     def broadcast(self, msg: str):
@@ -244,10 +237,7 @@ class Debate:
                 if self.neg_json_ans is not None:
                     neg_ans = json.loads(self.neg_json_ans)
                 if aff_ans['answer'] == neg_ans['answer']:
-                    print("agreement")
                     self.mod_ans["debate_answer"] = aff_ans['answer']
-
-
                 else:
                     print("disagreement", aff_ans, neg_ans)
             except Exception as e:
@@ -269,7 +259,6 @@ class Debate:
                 self.moderator.add_event(self.config['moderator_prompt'].replace('##aff_ans##', self.aff_ans).replace('##neg_ans##', self.neg_ans).replace('##round##', self.round_dct(round+2)))
                 self.mod_ans = self.moderator.ask()
                 self.moderator.add_memory(self.mod_ans)
-                print("====================== inside run self.mod_ans", self.mod_ans)
                 if self.mod_ans[0] == "{":
                     self.mod_ans = json.loads(self.mod_ans)
 
@@ -277,7 +266,6 @@ class Debate:
             self.config.update(self.mod_ans)
             self.config['success'] = True
             if str(self.answer) in str(self.mod_ans["debate_answer"]):
-                print("answer is correct", self.answer, self.mod_ans["debate_answer"])
                 debates['no_correct'] += 1
                 self.determined_correctness = True
 
@@ -300,10 +288,8 @@ class Debate:
             judge_player.add_event(self.config['judge_prompt_last2'])
             ans = judge_player.ask()
             judge_player.add_memory(ans)
-            print("===================================>>>>> ",ans)
             if ans[0] == "{" and ans[-1] == "}":
                 ans = json.loads(ans)
-                print(ans)
                 if ans["debate_answer"] != '':
                     self.config['success'] = True
                     # save file
@@ -311,7 +297,6 @@ class Debate:
              
             self.players.append(judge_player)
             if str(self.answer) in str(ans) and self.determined_correctness == False:
-                print("answer is correct", self.answer, ans)
                 debates['no_correct'] += 1
                 self.determined_correctness = True
         self.print_answer()
@@ -367,7 +352,7 @@ if __name__ == "__main__":
 
         answer_index = answer_raw.index('#### ')
         answer = answer_raw[answer_index+5:]
-        print(answer)
+        print("Ground truth answer: ", answer)
 
         config = json.load(open(f"{MAD_path}/code/utils/config4all.json", "r"))
         if mega:
@@ -385,16 +370,4 @@ if __name__ == "__main__":
     debates['start'] = start
     debates['number'] = number
     print(debates)
-    # while True:
-    #     debate_topic = ""
-    #     while debate_topic == "":
-    #         debate_topic = input(f"\nEnter your debate topic: ")
-            
-    #     config = json.load(open(f"{MAD_path}/code/utils/config4all.json", "r"))
-    #     mega_prompt = json.load(open(f"{MAD_path}/code/utils/megaprompt.json", "r"))
-    #     config['debate_topic'] = debate_topic
-    #     config['megaprompt'] = mega_prompt['megaprompt']
-
-    #     debate = Debate(num_players=3, openai_api_key=openai_api_key, config=config, temperature=0, sleep_time=0)
-    #     debate.run()
 
