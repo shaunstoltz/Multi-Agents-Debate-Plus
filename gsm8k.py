@@ -18,6 +18,18 @@ NAME_LIST=[
     "Moderator",
 ]
 
+debates = {
+    "no_correct": 0,
+    "unknow_answers": [],
+    "debate_outcomes": [{
+        "pos_memory": [],
+        "neg_memory": [],
+        "moderator_memory": []
+    }]
+}
+
+
+
 class DebatePlayer(Agent):
     def __init__(self, model_name: str, name: str, temperature:float, openai_api_key: str, sleep_time: float) -> None:
         """Create a player in the debate
@@ -64,6 +76,7 @@ class Debate:
         self.max_round = max_round
         self.sleep_time = sleep_time
         self.answer = answer
+        self.determined_correctness = False
 
 
         self.init_prompt()
@@ -209,6 +222,7 @@ class Debate:
                     print("agreement")
                     self.mod_ans["debate_answer"] = aff_ans['answer']
 
+
                 else:
                     print("disagreement", aff_ans, neg_ans)
             except Exception as e:
@@ -239,6 +253,9 @@ class Debate:
             self.config['success'] = True
             if str(self.answer) in str(self.mod_ans["debate_answer"]):
                 print("answer is correct", self.answer, self.mod_ans["debate_answer"])
+                debates['no_correct'] += 1
+                self.determined_correctness = True
+
             else:
                 print("answers??=======================>>>>>>>>>>>>>>>", self.answer, self.mod_ans["debate_answer"])
         # ultimate deadly technique.
@@ -259,16 +276,19 @@ class Debate:
             ans = judge_player.ask()
             judge_player.add_memory(ans)
             print("===================================>>>>> ",ans)
-            if ans[0] == "{":
+            if ans[0] == "{" and ans[-1] == "}":
                 ans = json.loads(ans)
                 print(ans)
                 if ans["debate_answer"] != '':
                     self.config['success'] = True
                     # save file
                     self.config.update(ans)
-            print("============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ans ==>> ",ans)    
+             
             self.players.append(judge_player)
-
+            if str(self.answer) in str(ans) and self.determined_correctness == False:
+                print("answer is correct", self.answer, ans)
+                debates['no_correct'] += 1
+                self.determined_correctness = True
         self.print_answer()
 
 def parse_args():
